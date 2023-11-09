@@ -18,11 +18,11 @@ namespace PatientAppointmentBookingProj.Repository
 
       
         //Get all apppointments
-        public Task<IEnumerable<PatientAppointmentVM>> GetAllAppointments()
+        public async Task<IEnumerable<PatientAppointmentVM>> GetAllAppointments()
         {
             try
             {
-                var all = _context.PatientAppointments.Select(x =>
+                var all = await _context.PatientAppointments.Select(x =>
                           new PatientAppointmentVM
                           {
                               id = x.Id,
