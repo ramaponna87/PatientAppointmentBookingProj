@@ -118,12 +118,25 @@ namespace PatientAppointmentBookingProj.Repository
 
         public bool approveappointment(int id)
         {
-            throw new NotImplementedException();
+            var details = _context.PatientAppointments.Where(x => x.Id == id).First();
+
+            details.isApproved = true;
+
+            _context.Entry(details).CurrentValues.SetValues(details);
+            _context.SaveChanges();
+            return true;
         }
 
         public Task Delete(int id)
         {
-            throw new NotImplementedException();
+            var details = _context.PatientAppointments.Where(x => x.Id == id).FirstOrDefault();
+
+            if (details != null)
+            {
+                _context.PatientAppointments.Remove(details);
+                _context.SaveChanges();
+            }
+            return Task.CompletedTask;
         }
     }
 }
