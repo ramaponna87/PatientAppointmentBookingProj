@@ -44,7 +44,7 @@ namespace PatientAppointmentBookingProj.Controllers
                 {
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction(nameof(Index));
+                   return RedirectToAction("Index", "Home", new { area = "" });
                 }
                
             }
@@ -52,6 +52,42 @@ namespace PatientAppointmentBookingProj.Controllers
 
             return View(model);
         }
+
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Login()
+        {           
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(LoginVM model)
+        {
+           
+            if (ModelState.IsValid)
+            {
+                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: true);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home", new { area = "" });
+
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    return View(model);
+                }
+            }
+
+
+            return View(model);
+        }
+
+
+
 
 
 
