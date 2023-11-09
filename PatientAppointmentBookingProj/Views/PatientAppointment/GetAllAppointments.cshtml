@@ -6,7 +6,7 @@
     ViewData["Title"] = "All Appointments";
 }
 <form>
-    <button asp-action="CreateOrEdit" asp-controller="Patient" class="btn btn-success m-2">Add New Appointment</button>
+    <button asp-action="CreateOrEdit" asp-controller="PatientAppointment" class="btn btn-success m-2">Add New Appointment</button>
     <table class="table table-responsive table table-hover AppointmentsTable">
         <thead>
             <tr class="table-active">
@@ -55,8 +55,8 @@
                         <td>@details.isApproved</td>
                         <td class="text-center">
                             <div class="btn-group btn-group-sm">
-                                <a asp-controller="Patient" asp-action="CreateOrEdit" class="btn btn-success" asp-route-id="@details.id">Edit</a>
-                                <a asp-controller="Patient" asp-action="Delete" asp-route-id="@details.id" class="btn btn-danger">Delete</a>
+                                <a asp-controller="PatientAppointment" asp-action="CreateOrEdit" class="btn btn-success" asp-route-id="@details.id">Edit</a>
+                                <a asp-controller="PatientAppointment" asp-action="Delete" asp-route-id="@details.id" class="btn btn-danger">Delete</a>
                             </div>
                         </td>
 
@@ -105,7 +105,7 @@
             if (result.isConfirmed) {
 
                 $.ajax({
-                    url: '../Patient/approveAppointment',
+                    url: '../PatientAppointment/approveAppointment',
                     type: "post",
                     data: {
                         id: id
