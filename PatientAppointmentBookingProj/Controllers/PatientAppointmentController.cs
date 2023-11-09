@@ -78,6 +78,22 @@ namespace PatientAppointmentBookingProj.Controllers
         }
 
 
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var patientdetails = _patientdbRepository.Delete(id);
+            return RedirectToAction(nameof(GetAllAppointments));
+        }
+
+
+        public bool approveAppointment(int id)
+        {
+            bool update = _patientdbRepository.approveappointment(id);
+            return update;
+
+        }
+
+
 
     }
 }
