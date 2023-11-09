@@ -69,14 +69,51 @@ namespace PatientAppointmentBookingProj.Repository
             }
         }
 
+        //Save appointment Details
         public PatientAppointmentVM SaveAppointmentDetails(PatientAppointmentVM details)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var ApDetails = new PatientAppointments()
+                {
+                    Name = details.Name,
+                    AppointmentDateTime = details.AppointmentDateTime,
+                    Issue = details.Issue,
+                    ContactNumber = details.ContactNumber,
+                    EmailAddress = details.Email,
+                    isApproved = details.isApproved
+                };
+                _context.PatientAppointments.Add(ApDetails);
+                _context.SaveChanges();
+                return details;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public PatientAppointmentVM UpdateAppointmentDetailsById(PatientAppointmentVM details)
         {
-            throw new NotImplementedException();
+            var exists = _context.PatientAppointments.Any(x => x.Name == details.Name && x.AppointmentDateTime == details.AppointmentDateTime);
+            if (!exists)
+            {
+                var ApDetails = new PatientAppointments()
+                {
+                    Name = details.Name,
+                    AppointmentDateTime = details.AppointmentDateTime,
+                    Issue = details.Issue,
+                    ContactNumber = details.ContactNumber,
+                    EmailAddress = details.Email,
+
+                };
+                _context.PatientAppointments.Update(ApDetails);
+                _context.SaveChanges();
+                return details;
+            }
+
+            return details;
         }
 
         public bool approveappointment(int id)
