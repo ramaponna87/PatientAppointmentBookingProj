@@ -12,9 +12,12 @@ namespace PatientAppointmentBookingProj.Controllers
             _patientdbRepository = patientdbRepository;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> GetAllAppointments()
         {
-            return View();
+            var all = await _patientdbRepository.GetAllAppointments();
+            return View(all);
         }
+
+
     }
 }
