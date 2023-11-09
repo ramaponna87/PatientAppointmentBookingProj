@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using PatientAppointmentBookingProj.Models;
 
 namespace PatientAppointmentBookingProj.Data
 {
@@ -8,6 +9,8 @@ namespace PatientAppointmentBookingProj.Data
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
         }
-               
+
+        public DbSet<AppUser> AppUser { get; set; }
+
     }
 }
