@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
 
-namespace PatientAppointmentBookingProj.Models
+namespace PatientAppointmentBookingProj.Models.ViewModel
 {
     public class RegisterVM
     {

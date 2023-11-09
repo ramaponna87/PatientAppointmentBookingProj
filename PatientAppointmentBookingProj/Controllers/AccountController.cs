@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PatientAppointmentBookingProj.Models;
+using PatientAppointmentBookingProj.Models.ViewModel;
 using System.Text.Encodings.Web;
 
 namespace PatientAppointmentBookingProj.Controllers
