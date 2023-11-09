@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PatientAppointmentBookingProj.Models.ViewModel;
 using PatientAppointmentBookingProj.Repository.IRepository;
 
@@ -13,6 +14,7 @@ namespace PatientAppointmentBookingProj.Controllers
             _patientdbRepository = patientdbRepository;
         }
 
+        [Authorize]
         public async Task<IActionResult> GetAllAppointments()
         {
             var all = await _patientdbRepository.GetAllAppointments();

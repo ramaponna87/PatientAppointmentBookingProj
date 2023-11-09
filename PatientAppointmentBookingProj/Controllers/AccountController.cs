@@ -73,7 +73,7 @@ namespace PatientAppointmentBookingProj.Controllers
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home", new { area = "" });
+                    return RedirectToAction(nameof(PatientAppointmentController.GetAllAppointments), "PatientAppointment");
 
                 }
                 else
