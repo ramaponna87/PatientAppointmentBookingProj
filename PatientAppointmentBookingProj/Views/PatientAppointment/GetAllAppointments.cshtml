@@ -1,0 +1,121 @@
+﻿@model IEnumerable<PatientAppointmentBookingProj.Models.ViewModel.PatientAppointmentVM>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "All Appointments";
+}
+<form>
+    <button asp-action="CreateOrEdit" asp-controller="Patient" class="btn btn-success m-2">Add New Appointment</button>
+    <table class="table table-responsive table table-hover AppointmentsTable">
+        <thead>
+            <tr class="table-active">
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AppointmentDateTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Issue)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ContactNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.isApproved)
+                </th>
+                <th>
+
+                </th>
+
+                <th>
+                    Actions
+                </th>
+            </tr>
+
+
+        </thead>
+
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var details in Model)
+                {
+                    <tr>
+
+                        <td>@details.Name</td>
+                        <td>@details.AppointmentDateTime</td>
+                        <td>@details.Issue</td>
+                        <td>@details.Email</td>
+                        <td>@details.ContactNumber</td>
+                        <td>@details.isApproved</td>
+                        <td class="text-center">
+                            <div class="btn-group btn-group-sm">
+                                <a asp-controller="Patient" asp-action="CreateOrEdit" class="btn btn-success" asp-route-id="@details.id">Edit</a>
+                                <a asp-controller="Patient" asp-action="Delete" asp-route-id="@details.id" class="btn btn-danger">Delete</a>
+                            </div>
+                        </td>
+
+                        <td>
+                            <a href="" class="btn btn-success" onclick="ApproveBookings(@details.id,event)">Approve</a>
+
+
+
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="6">
+                        <div>
+                            No appointments avaialble at this moment!
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
+
+
+<script>
+
+    function ApproveBookings(id, event) {
+        alert(id)
+        var warningText = "Are you sure you wish to Approve";
+        event.preventDefault();
+        Swal.fire({
+            title: 'Are you sure?',
+            text: warningText,
+            showCancelButton: true,
+            cancelButtonText: 'No',
+            confirmButtonText: 'Yes',
+            icon: 'warning',
+            customClass: {
+                confirmButton: 'btn-success',
+                cancelButton: 'btn-outline-primary'
+            },
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                $.ajax({
+                    url: '../Patient/approveAppointment',
+                    type: "post",
+                    data: {
+                        id: id
+                    },
+                    success: function (data) {
+                        toastr.success("Booking Approved Successfully!!");
+                    }
+                })
+            }
+        })
+    }
+
+</script>

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PatientAppointmentBookingProj.Models.ViewModel;
 using PatientAppointmentBookingProj.Repository.IRepository;
 
 namespace PatientAppointmentBookingProj.Controllers
@@ -17,6 +18,65 @@ namespace PatientAppointmentBookingProj.Controllers
             var all = await _patientdbRepository.GetAllAppointments();
             return View(all);
         }
+
+        [HttpGet]
+        public IActionResult CreateOrEdit(int id = 0)
+        {
+            if (id == 0)
+            {
+                return View(new PatientAppointmentVM());
+            }
+            else
+            {
+                var patient = _patientdbRepository.GetAppointmentDetailsById(id);
+
+                if (patient != null)
+                {
+                    return View(patient);
+                }
+                TempData["errorMessage"] = "Patient details not found";
+                return RedirectToAction("GetAllAppointments");
+            }
+
+        }
+
+        [HttpPost]
+        public IActionResult CreateOrEdit(PatientAppointmentVM model)
+        {
+
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    if (model.id == 0)
+                    {
+                        _patientdbRepository.SaveAppointmentDetails(model);
+                        TempData["successMessage"] = "details Added Successfully!";
+                        return RedirectToAction(nameof(GetAllAppointments));
+                    }
+                    else
+                    {
+                        _patientdbRepository.UpdateAppointmentDetailsById(model);
+                        TempData["successMessage"] = "Updated Successfully!";
+                        return RedirectToAction(nameof(GetAllAppointments));
+                    }
+
+                }
+                else
+                {
+                    TempData["errorMessage"] = "Model state is Invalid";
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["errorMessage"] = ex.Message;
+                return View();
+            }
+
+            return View();
+
+        }
+
 
 
     }

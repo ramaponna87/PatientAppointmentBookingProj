@@ -1,0 +1,51 @@
+﻿
+@model PatientAppointmentBookingProj.Models.ViewModel.PatientAppointmentVM
+
+@{
+    ViewData["Title"] = Model != null && Model.id == 0 ? "Add New Appointment" : "Edit appointment";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form method="post" action="CreateOrEdit">
+    <input type="hidden" asp-for="id" />
+    <div class="mb-3">
+        <label for="" class="form-label">Name</label>
+        <input type="text" class="form-control" id="exampleInputEmail1" asp-for="Name">
+    </div>
+    <div class="mb-3">
+        <label for="" class="form-label">Appointment Date Time</label>
+        <input type="datetime-local" asp-for="AppointmentDateTime" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label for="" class="form-label">Issue</label>
+        <input type="text" class="form-control" id="Issue" asp-for="Issue">
+    </div>
+    <div class="mb-3">
+        <label for="" class="form-label">Email</label>
+        <input type="email" class="form-control" asp-for="Email">
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Contact Number</label>
+        <input type="number" class="form-control" asp-for="ContactNumber">
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Approved</label>
+        @*<input type="radio" class="form-control" asp-for="isApproved">*@
+        @Html.CheckBoxFor(m => m.isApproved, new { @checked =Model.isApproved, @disabled = "disabled"})
+    </div>
+    @if (Model != null && Model.id == 0)
+    {
+        <button type="submit" class="btn btn-primary">Submit</button>
+    }
+    else
+    {
+        <button type="submit" class="btn btn-success">Update</button>
+    }
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+        }
