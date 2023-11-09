@@ -43,9 +43,30 @@ namespace PatientAppointmentBookingProj.Repository
 
         }
 
+        //Get apppointment details by Id
         public PatientAppointmentVM GetAppointmentDetailsById(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var details = _context.PatientAppointments.Where(x => x.Id == id).Select(x => new PatientViewModel
+                {
+                    id = x.Id,
+                    Name = x.Name,
+                    AppointmentDateTime = x.AppointmentDateTime,
+                    Issue = x.Issue,
+                    Email = x.EmailAddress,
+                    ContactNumber = x.ContactNumber,
+                    isApproved = x.isApproved
+
+                }).First();
+
+                return details;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public PatientAppointmentVM SaveAppointmentDetails(PatientAppointmentVM details)
