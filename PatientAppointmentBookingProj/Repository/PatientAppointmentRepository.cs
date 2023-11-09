@@ -48,7 +48,7 @@ namespace PatientAppointmentBookingProj.Repository
         {
             try
             {
-                var details = _context.PatientAppointments.Where(x => x.Id == id).Select(x => new PatientViewModel
+                var details = _context.PatientAppointments.Where(x => x.Id == id).Select(x => new PatientAppointmentVM
                 {
                     id = x.Id,
                     Name = x.Name,
